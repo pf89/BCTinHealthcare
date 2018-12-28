@@ -1,0 +1,16 @@
+<%- include partials/header.ejs %>
+<div class="container" style="width: 650px;">
+    <h2 class="text-center">Add Autorization</h2>
+    <br/>
+    <form method="post">
+        <div class="form-group col-sm-12">
+            <label for="PaAddress">Patient Address</label>
+            <input type="text" class="form-control" id="PaAddress" name="PaAddress">
+        </div>
+
+        <div class="form-group col-sm-4">
+            <button type="submit" class="btn btn-primary" formaction="/autorization/add/<%- address%>/<%- role%>">Add</button>
+        </div>
+    </form>
+</div>
+<%- include partials/footer.ejs %>

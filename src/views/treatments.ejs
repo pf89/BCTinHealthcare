@@ -1,0 +1,17 @@
+<%- include partials/header.ejs %>
+<div class="container" style="width: 650px;">
+    <form id="editPa" method="post">
+        <div class="form-group col-sm-12">
+            <h2 class="text-center">Treatments</h2>
+            <div class="form-group col-sm-12">
+                <label for="ProviderAddress">Provider Address</label>
+                <input type="text" class="form-control" id="ProviderAddress" name="Provider_Adress">
+            </div>
+
+            <div class="form-group col-sm-4">
+                <button type="submit" class="btn btn-primary" formaction="/treatment/search/<%- address %>/<%- role %>">Search Treatments</button>
+            </div>
+        </div>
+    </form>
+</div>
+<%- include partials/footer.ejs %>

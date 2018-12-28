@@ -1,0 +1,34 @@
+<%- include partials/header.ejs %>
+<div class="container" style="width: 650px;">
+    <form id="editPa" method="post">
+        <div class="form-group col-sm-12">
+            <h2 class="text-center">Last Treatments</h2>
+            <% for(var key in treatments){ %>
+                <p>
+                    <a class="btn btn-light" data-toggle="collapse" href="#<%- treatments[key].treatment  %>" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <%- treatments[key].treatment  %>
+                    </a>
+                </p>
+                <div class="collapse" id="<%- treatments[key].treatment%>">
+                    <div class="card card-body">
+                        <% if(role === "Patient"){%>
+                            <b>Healthcare Provider:</b> <br/>
+                            <%- treatments[key].provider %><br/><br>
+                        <%}%>
+                        <b>Data about Treatment:</b> <br/>
+                        <% for(var key1 in treatments[key].ipfs){ %>
+                            <%if(key1 === "img"){%>
+                                <a href="https://ipfs.io/ipfs/<%- treatments[key].ipfs[key1]%>" onclick="window.open('https://ipfs.io/ipfs/<%- treatments[key].ipfs[key1]%>', 'newwindow','width=1000,height=1000');return false;">XRay</a>
+                            <%}else{%>
+                                <u><%- key1 %>:</u>
+                                <%- treatments[key].ipfs[key1] %><br/><br/>
+                            <%}%>
+                        <%}%>
+                    </div>
+                </div><br/>
+            <%}%>
+            <br/>
+        </div>
+    </form>
+</div>
+<%- include partials/footer.ejs %>

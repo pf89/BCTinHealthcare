@@ -1,0 +1,21 @@
+<%- include partials/header.ejs %>
+<div class="container" style="width: 650px;">
+    <form id="editPa" method="post">
+        <div class="form-group col-sm-12">
+            <h2 class="text-center">Personal Data</h2>
+            <input hidden name="User" value="<%= role%>">
+            <% for(var key in personalData){ %>
+                <%if(key != "User"){%>
+                    <label for="<%- role%><%- key%>"><%- key  %></label>
+                    <input type="text" class="form-control" id="<%- role%><%- key%>" name="<%- key%>" value="<%- personalData[key]%>">
+                <%}%>
+            <%}%>
+            <br/>
+            <button type="submit" class="btn btn-primary" formaction="/user/edit/<%- address %>/<%- role %>">Update</button>
+
+        </div>
+    </form>
+</div>
+<%- include partials/footer.ejs %>
+
+
