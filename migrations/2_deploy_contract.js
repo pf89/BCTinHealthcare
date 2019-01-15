@@ -1,7 +1,7 @@
 var Web3 = require('web3');
 var TruffleConfig= require('../truffle');
 var Register = artifacts.require("./Register.sol");
-var Autorisation = artifacts.require("./Autorisation");
+var Authorization = artifacts.require("./Authorization");
 var Treatment = artifacts.require("./Treatment");
 
 module.exports = function(deployer) {
@@ -15,7 +15,7 @@ module.exports = function(deployer) {
 
     console.log('>> Deploying migration');
     deployer.deploy(Register).then(_instance => {
-         deployer.deploy(Autorisation, _instance.address).then(_instance2 => {
+         deployer.deploy(Authorization, _instance.address).then(_instance2 => {
             deployer.deploy(Treatment, _instance2.address).then(instance3 => console.log(instance3.address));
         });
     });

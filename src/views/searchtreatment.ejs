@@ -1,0 +1,37 @@
+<%- include partials/header.ejs %>
+<div class="container" style="width: 650px;">
+    <form id="editPa" method="post">
+        <div class="form-group col-sm-12">
+            <h2 class="text-center">Treatments</h2>
+
+                <%if (role === "Patient"){%>
+                    <div class="form-group col-sm-12">
+                        <label for="ProviderAddress">Provider Address</label>
+                        <input type="text" class="form-control" id="ProviderAddress" name="Provider_Address">
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <button type="submit" class="btn btn-primary btn-block" formaction="/treatment/search/<%- address %>/<%- role %>">Search Treatments from Provider</button>
+                    </div>
+                    <br><br>
+                    <div class="form-group col-sm-12">
+                        <label>Search All Treatments</label>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <button type="submit" class="btn btn-primary btn-block" formaction="/treatment/searchall/<%- address %>/<%- role %>">Search</button>
+                    </div>
+                 <%}else{%>
+                    <div class="form-group col-sm-12">
+                        <label for="PatientAddress">Patient Address</label>
+                        <input type="text" class="form-control" id="PatientAddress" name="Patient_Address">
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <button type="submit" class="btn btn-primary btn-block" formaction="/treatment/search/<%- address %>/<%- role %>">Search Own Treatments for Patient</button>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <button type="submit" class="btn btn-primary btn-block" formaction="/treatment/searchall/<%- address %>/<%- role %>">Search All Treatments of Patient</button>
+                    </div>
+                  <%}%>
+        </div>
+    </form>
+</div>
+<%- include partials/footer.ejs %>

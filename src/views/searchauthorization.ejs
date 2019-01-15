@@ -1,0 +1,27 @@
+<%- include partials/header.ejs %>
+<div class="container" style="width: 650px;">
+    <form id="editPa" method="post">
+        <div class="form-group col-sm-12">
+            <h2 class="text-center">Search Authorization</h2>
+            <div class="form-group col-sm-12">
+                <%if (role === "Patient"){%>
+                    <label for="ProviderAddress">Search Authorization with Provider Address</label>
+                <%}else{%>
+                    <label for="ProviderAddress">Search Authorization with Patient Address</label>
+                <%}%>
+                <input type="text" class="form-control" id="ProviderAddress" name="Provider_Address">
+            </div>
+            <div class="form-group col-sm-12">
+                <button type="submit" class="btn-block btn btn-primary" formaction="/authorization/search/<%- address %>/<%- role %>">Search</button>
+            </div>
+            <br><br>
+            <div class="form-group col-sm-12">
+                <label>Search All Available Authorizations</label>
+            </div>
+            <div class="form-group col-sm-12">
+                <button type="submit" class="btn btn-primary btn-block" formaction="/authorization/searchall/<%- address %>/<%- role %>">Search</button>
+            </div>
+        </div>
+    </form>
+</div>
+<%- include partials/footer.ejs %>

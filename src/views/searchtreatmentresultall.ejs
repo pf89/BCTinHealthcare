@@ -1,10 +1,17 @@
 <%- include partials/header.ejs %>
-<div class="container" style="width: 650px;">
+<div class="container" style="width: 750px;">
     <form id="editPa" method="post">
         <div class="form-group col-sm-12">
-            <h2 class="text-center">Last Treatments</h2>
+            <h2 class="text-center">Treatments</h2>
             <% for(var key in treatments){ %>
-                <p>
+                <p class="text-center">
+                    <%if (role === "Healthcare Provider"){%>
+                        <%- treatments[key].ipfs.PatientName  %> &nbsp; &nbsp;
+                        <%- treatments[key].ipfs.Patient_Address.toLowerCase()  %> &nbsp; &nbsp;
+                    <%} else{%>
+                        <%- treatments[key].ipfs.HealthcareProviderName  %> &nbsp; &nbsp;
+                        <%- treatments[key].provider.toLowerCase()  %> &nbsp; &nbsp;
+                    <%}%>
                     <a class="btn btn-light" data-toggle="collapse" href="#<%- treatments[key].treatment  %>" role="button" aria-expanded="false" aria-controls="collapseExample">
                         <%- treatments[key].treatment  %>
                     </a>

@@ -22,24 +22,24 @@
 <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav">
-            <% if(role === "Healthcare Provider"){%>
-                <li class="nav-item">
-                    <a class="nav-link" href="/treatment/<%= address %>/<%= role%>">Add Treatment</a>
-                </li>
-            <%}%>
             <li class="nav-item">
-                <a class="nav-link" href="/lastTreatments/<%= address %>/<%= role%>">Last Treatments</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/treatments/<%= address %>/<%= role%>">Treatments</a>
+                <a class="nav-link" href="/main/<%= address %>/<%= role%>">Startpage</a>
             </li>
             <% if(role === "Healthcare Provider"){%>
                 <li class="nav-item">
-                    <a class="nav-link" href="/autorization/<%= address %>/<%= role%>">Autorization</a>
+                    <a class="nav-link" href="/addtreatment/<%= address %>/<%= role%>">Add Treatment</a>
                 </li>
             <%}%>
             <li class="nav-item">
-                <a class="nav-link" href="/autorization/get/<%= address %>/<%= role%>">See Autorizations</a>
+                <a class="nav-link" href="/searchtreatment/<%= address %>/<%= role%>">Search Treatments</a>
+            </li>
+            <% if(role === "Healthcare Provider"){%>
+                <li class="nav-item">
+                    <a class="nav-link" href="/addauthorization/<%= address %>/<%= role%>">Add Authorization</a>
+                </li>
+            <%}%>
+            <li class="nav-item">
+                <a class="nav-link" href="/searchauthorization/<%= address %>/<%= role%>">Search Authorization</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/profile/<%= address %>/<%= role%>">Profile</a>
@@ -49,7 +49,7 @@
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/profile/logout">Logout</a>
+                <a class="nav-link" href="/logout">Logout</a>
             </li>
         </ul>
     </div>

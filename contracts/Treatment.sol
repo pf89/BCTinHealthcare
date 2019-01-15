@@ -1,14 +1,13 @@
 pragma solidity 0.4.24;
 
-import "./Autorisation.sol";
+import "./Authorization.sol";
 
 contract Treatment {
 
-    address autorizationContract;
+    address authorizationContract;
     constructor(address auto) public {
-        autorizationContract = auto;
+        authorizationContract = auto;
     }
-
 
     //create treatment
     struct TreatmentPatient{
@@ -26,11 +25,14 @@ contract Treatment {
     mapping(address => TreatmentPatient[]) private treatmentsProvider;
     mapping(address => TreatmentProvider[]) private treatmentsPatient;
 
+    //add treatment to provider mapping and patient mapping
     function addTreatment(address _patientAddress, string _ipfsHash) public {
-        Autorisation auto = Autorisation(autorizationContract);
-        require(auto.isAutorizedTreatment(msg.sender,_patientAddress));
-
+        Authorization auto = Authorization(authorizationContract);
+        //check if healthcare provider has permissions to add treatments for patient
+        require(auto.isAuthorizedTreatment(msg.sender,_patientAddress));
+        //Add treatment hash to provider mapping
         treatmentsProvider[msg.sender].push(TreatmentPatient(_patientAddress, _ipfsHash));
+        //Add treatment hash to patient mapping
         treatmentsPatient[_patientAddress].push(TreatmentProvider(msg.sender, _ipfsHash));
     }
 
@@ -41,31 +43,31 @@ contract Treatment {
             address a = treatmentsPatient[msg.sender][i].providerAddress;
             providerAddresses[i] = a;
         }
-
         return (providerAddresses);
     }
 
     //get bytes for ipfs hash links back (patient)
     function getAllTreatmentsForPatientIpfs(uint counter) public returns(string){
+        //get ipfs hash for any item in mapping because it was not possible to return an array of bytes
+        //also it was not possible to concatenate the strings
         return treatmentsPatient[msg.sender][counter].ipfsHash;
     }
 
     //get address array back. Provider get all patient addresses which the provider treatments
     function getAllTreatmentsForProvider() public view returns(address[]){
         address[] memory patientAddresses = new address[](treatmentsProvider[msg.sender].length);
-
         for(uint i = 0; i < treatmentsProvider[msg.sender].length;  i++) {
             address a = treatmentsProvider[msg.sender][i].patientAddress;
             patientAddresses[i] = a;
         }
-
         return patientAddresses;
     }
 
     //get bytes for ipfs hash links back (provider)
     function getAllTreatmentsForProviderIpfs(uint counter) public returns(string){
+        //get ipfs hash for any item in mapping because it was not possible to return an array of bytes
+        //also it was not possible to concatenate the strings
         return treatmentsProvider[msg.sender][counter].ipfsHash;
     }
-
 
 }

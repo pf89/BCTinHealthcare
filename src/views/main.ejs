@@ -1,8 +1,92 @@
 <%- include partials/header.ejs %>
-
-<br/>
-<br/>
-<div class="container" style="width: 650px;">
-    <h1>Hello World</h1>
+<div class="container text-center" style="width: 750px;">
+    <%if (treatments ==="undefined"){%>
+        <h2 class="text-center">Last Treatments</h2>
+        <br/>
+            <p>No treatments available</p>
+        <br/>
+        <%if(role === "Healthcare Provider"){%>
+            <a class="btn btn-primary" href="/addtreatment/<%- address %>/<%- role %>">Add Treatment</a>
+        <%}%>
+    <br><br>
+    <%}else{%>
+        <h2 class="text-center">Last Treatments</h2>
+        <br/>
+            <div class="form-group col-sm-12">
+                <%var i = 1; for(var key in treatments){ %>
+                    <p>
+                        <%if (role === "Healthcare Provider"){%>
+                            <%- treatments[key].ipfs.PatientName  %> &nbsp; &nbsp;
+                            <%- treatments[key].ipfs.Patient_Address.toLowerCase()  %> &nbsp; &nbsp;
+                        <%} else{%>
+                            <%- treatments[key].ipfs.HealthcareProviderName  %> &nbsp; &nbsp;
+                            <%- treatments[key].provider.toLowerCase()  %> &nbsp; &nbsp;
+                        <%}%>
+                        <a class="btn btn-light" data-toggle="collapse" href="#Treatment<%- i %>" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            Treatment <%- i%>
+                        </a>
+                    </p>
+                    <div class="collapse" id="Treatment<%- i%>">
+                        <div class="card card-body">
+                            <% if(role === "Patient"){%>
+                                <b>Healthcare Provider:</b> <br/>
+                                <%- treatments[key].provider %><br/><br>
+                            <%}%>
+                            <b>Data about Treatment:</b> <br/>
+                            <% for(var key1 in treatments[key].ipfs){ %>
+                            <%if(key1 === "img"){%>
+                                <a href="https://ipfs.io/ipfs/<%- treatments[key].ipfs[key1]%>" onclick="window.open('https://ipfs.io/ipfs/<%- treatments[key].ipfs[key1]%>', 'newwindow','width=1000,height=1000');return false;">XRay</a>
+                            <%}else{%>
+                                <u><%- key1 %>:</u>
+                                <%- treatments[key].ipfs[key1] %><br/><br/>
+                            <%}%>
+                            <%}%>
+                        </div>
+                    </div>
+                    <%i++}%>
+            </div>
+            <%if (role === "Healthcare Provider"){%>
+              <a class="btn btn-primary" href="/addtreatment/<%- address %>/<%- role %>">Add Treatment</a>
+            <%}%>
+        <%}%>
+    <br/><br>
+    <%if (authorizations ==="undefined"){%>
+        <h2 class="text-center">Last Authorizations</h2>
+        <br>
+        <p>No Authorizations Available</p>
+        <br>
+        <%if(role === "Healthcare Provider"){%>
+            <a class="btn btn-primary" href="/addtreatment/<%- address %>/<%- role %>">Add Authorization</a>
+        <%}%>
+        <br>
+    <%}else{%>
+        <h2 class="text-center">Last Authorizations</h2>
+            <br>
+            <div class="form-group col-sm-12">
+                <%var i = 1; for(var key in authorizations){ %>
+                    <p>
+                        <%- authorizations[key].ipfs.Name  %> &nbsp; &nbsp;
+                        <%- authorizations[key].address  %> &nbsp; &nbsp;
+                        <a class="btn btn-light" data-toggle="collapse" href="#Authorization<%- i %>" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            Authorization <%- i %>
+                        </a>
+                    </p>
+                    <div class="collapse" id="Authorization<%- i%>">
+                        <div class="card card-body">
+                            <u>Address:</u>
+                            <%- authorizations[key].address  %> <br/><br/>
+                            <% for(var key1 in authorizations[key].ipfs){ %>
+                                <u><%- key1 %>:</u>
+                                <%- authorizations[key].ipfs[key1] %><br/><br/>
+                            <%}%>
+                            <br/>
+                        </div>
+                    </div>
+                <%i++}%>
+                    <%if (role === "Healthcare Provider"){%>
+                        <a class="btn btn-primary" href="/addauthorization/<%- address %>/<%- role %>">Add Authorization</a>
+                    <%}%>
+            </div>
+    <%}%>
 </div>
 <%- include partials/footer.ejs %>

@@ -1,0 +1,28 @@
+<%- include partials/header.ejs %>
+<div class="container" style="width: 750px;">
+        <div class="form-group col-sm-12">
+            <h2 class="text-center">Autorizations</h2>
+            <%var i = 1; for(var key in authorization){ %>
+                <p class="text-center">
+                    <%- authorization[key].ipfs.Name%> &nbsp; &nbsp;
+                    <%- authorization[key].address%> &nbsp; &nbsp;
+                    <a class="btn btn-light" data-toggle="collapse" href="#Authorization<%- i %>" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Authorization <%- i %>
+                    </a>
+                </p>
+            <div class="collapse" id="Authorization<%- i%>">
+                <div class="card card-body">
+                    <u>Address:</u>
+                    <%- authorization[key].address  %> <br/><br/>
+                    <% for(var key1 in authorization[key].ipfs){ %>
+                        <u><%- key1 %>:</u>
+                        <%- authorization[key].ipfs[key1] %><br/><br/>
+                    <%}%>
+                    <br/>
+                </div>
+            </div>
+            <%i++}%>
+            <br/>
+        </div>
+</div>
+<%- include partials/footer.ejs %>

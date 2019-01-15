@@ -1,0 +1,25 @@
+<%- include partials/header.ejs %>
+<div class="container" style="width: 750px;">
+    <form id="editPa" method="post">
+        <div class="form-group col-sm-12">
+            <h2 class="text-center">Authorization</h2>
+                <p class="text-center">
+                    <%- authorization.ipfs.Name%> &nbsp; &nbsp;
+                    <%- authorization.address%> &nbsp; &nbsp;
+                   <a class="btn btn-light" data-toggle="collapse" href="#auto" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Authorization
+                    </a>
+                </p>
+                <div class="collapse" id="auto">
+                    <div class="card card-body">
+                        <% for(var key1 in authorization.ipfs){ %>
+                            <u><%- key1 %>:</u>
+                            <%- authorization.ipfs[key1] %><br/><br/>
+                        <%}%>
+                    </div>
+                </div><br/>
+            <br/>
+        </div>
+    </form>
+</div>
+<%- include partials/footer.ejs %>
