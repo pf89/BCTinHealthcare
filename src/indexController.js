@@ -45,12 +45,12 @@ indexController.get('/login', function (req, res) {
     res.render('login');
 });
 
-//render add treatment apge
+//render add treatment page
 indexController.get('/addtreatment/:address/:role', function (req, res) {
     res.render('addtreatment', {address: req.params.address, role: req.params.role});
 });
 
-//render search treatments page
+//render search treatment page
 indexController.get('/searchtreatment/:address/:role', async function (req, res) {
     res.render('searchtreatment', {address: req.params.address, role: req.params.role});
 });
@@ -87,7 +87,7 @@ indexController.get('/logout', async function (req, res) {
 
 //After the role is selected, return the page for entering personal data
 indexController.post('/user', function (req, res) {
-    //if patient or healthcare provider
+    //if patient or healthcare provider is selected on the registration page
     if(req.body.SelectUser === "hp1"){
         res.render('healthcareproviderregistration');
     } else {
@@ -151,7 +151,7 @@ indexController.post('/login', async function (req, res) {
     else res.status(500);
 });
 
-//add Treatment for patient from provider
+//add treatment for patient from provider
 indexController.post('/treatment/add/:address/:role', async function (req, res) {
     try {
        var isAuthorized = await bct.isAuthorized(req.body.Patient_Address, req.params.address);
@@ -172,10 +172,10 @@ indexController.post('/treatment/add/:address/:role', async function (req, res) 
            req.body.Date = new Date();
            //transfer object to json for ipfs upload
            const treatmentDataJson = JSON.stringify(req.body);
-           //get Xray picture from form
+           //get xray picture from form
            var img = req.files.XRay;
            //add treatment to ipfs and get treatment hash back
-           var hash = await ipfs.postTreatmentToIpfs(req.body.Patient_Address, img, treatmentDataJson)
+           var hash = await ipfs.postTreatmentToIpfs(req.params.address, img, treatmentDataJson)
                .catch(err => console.log(err));
            //create transaction on blockchain with IPFS hash and user address
            await bct.addTreatment(req.params.address, req.body.Patient_Address, hash)
@@ -204,7 +204,7 @@ indexController.post('/treatment/search/:address/:role', async function (req, re
         var treatments;
         var treatmentsIpfs;
         if (req.params.role === "Healthcare Provider") {
-            //get list of addreses to which a healthcare provider was providing treatments
+            //get list of addresses to which a healthcare provider was providing treatments
             treatments = await bct.getTreatmentsforProvider(req.params.address);
             //get treatment ipfs hashes to specific patient address
             treatmentsIpfs = await bct.getTreatmentsfromPatient(req.params.address, treatments,

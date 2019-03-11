@@ -27,19 +27,19 @@
             </li>
             <% if(role === "Healthcare Provider"){%>
                 <li class="nav-item">
+                    <a class="nav-link" href="/addauthorization/<%= address %>/<%= role%>">Request Authorization</a>
+                </li>
+            <%}%>
+            <% if(role === "Healthcare Provider"){%>
+                <li class="nav-item">
                     <a class="nav-link" href="/addtreatment/<%= address %>/<%= role%>">Add Treatment</a>
                 </li>
             <%}%>
             <li class="nav-item">
-                <a class="nav-link" href="/searchtreatment/<%= address %>/<%= role%>">Search Treatments</a>
+                <a class="nav-link" href="/searchauthorization/<%= address %>/<%= role%>">My Authorizations</a>
             </li>
-            <% if(role === "Healthcare Provider"){%>
-                <li class="nav-item">
-                    <a class="nav-link" href="/addauthorization/<%= address %>/<%= role%>">Add Authorization</a>
-                </li>
-            <%}%>
             <li class="nav-item">
-                <a class="nav-link" href="/searchauthorization/<%= address %>/<%= role%>">Search Authorization</a>
+                <a class="nav-link" href="/searchtreatment/<%= address %>/<%= role%>">Treatments</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/profile/<%= address %>/<%= role%>">Profile</a>

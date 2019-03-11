@@ -1,5 +1,6 @@
 //Ipfs instance
 var ipfsAPI = require('ipfs-api');
+//connect to ipfs daemon
 var ipfs = ipfsAPI('/ip4/127.0.0.1/tcp/5001');
 
 module.exports = {
@@ -20,18 +21,21 @@ module.exports = {
         ];
         //const fileBuffer = Buffer.from(personalDataJson);
         var hash = await ipfs.add(file);
+        //pin hash
+        var res = await ipfs.pin.add(hash[0].hash);
         //return path to personal data
         return hash[1].hash;
     },
 
-    //add treatment data from a patient to ipfs
-    postTreatmentToIpfs: async function (address, img, newtreatmentData) {
+    //post treatment data from a patient to ipfs
+    postTreatmentToIpfs: async function (hpAddress, img, newtreatmentData) {
         //Convert treatment data into buffer thereby notice folder structure
         const file = [];
         var hashArray;
+        var myDate = formatDate(new Date());
         file.push(
             {
-                path: '/' + address + '/treatment/treatment.json',
+                path: '/treatments/'+ hpAddress + '/treatment_1_'+ myDate +'/treatment.json',
                 content: Buffer.from(newtreatmentData),
             }
         );
@@ -39,16 +43,34 @@ module.exports = {
         if (img !== undefined){
             file.push(
                 {
-                    path: '/' + address + '/treatment/xray.jpg',
+                    path: '/treatments/'+ hpAddress + '/treatment_1_'+ myDate +'/xray.jpg',
                     content: img.data,
                 }
             );
             hashArray = await ipfs.files.add(file);
+            //pin hash
+            var res = await ipfs.pin.add(hashArray[0].hash);
             //return hash array of folder
             return hashArray[3].hash;
         }
         hashArray = await ipfs.files.add(file);
+        var res = await ipfs.pin.add(hashArray[0].hash);
         //return hash array of folder
         return hashArray[2].hash;
     },
 };
+
+function formatDate(date) {
+    var monthNames = [
+        "January", "February", "March",
+        "April", "May", "June", "July",
+        "August", "September", "October",
+        "November", "December"
+    ];
+
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+
+    return day + monthNames[monthIndex] + year;
+}
