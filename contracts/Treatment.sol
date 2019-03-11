@@ -30,9 +30,9 @@ contract Treatment {
         Authorization auto = Authorization(authorizationContract);
         //check if healthcare provider has permissions to add treatments for patient
         require(auto.isAuthorizedTreatment(msg.sender,_patientAddress));
-        //Add treatment hash to provider mapping
+        //add treatment hash to provider mapping
         treatmentsProvider[msg.sender].push(TreatmentPatient(_patientAddress, _ipfsHash));
-        //Add treatment hash to patient mapping
+        //add treatment hash to patient mapping
         treatmentsPatient[_patientAddress].push(TreatmentProvider(msg.sender, _ipfsHash));
     }
 

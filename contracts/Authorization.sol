@@ -24,7 +24,7 @@ contract Authorization {
         require(bytes(_ipfsHashPatient).length > 0 && bytes(_ipfsHashProvider).length > 0);
         //check if relationship doesnt exist
         require(!isAuthorized(_patientAddress));
-        //Add mapping in both directions patient - provider and provider - patient
+        //add mapping in both directions patient - provider and provider - patient
         authorizationProvider[msg.sender].push(_patientAddress);
         authorizationPatient[_patientAddress].push(msg.sender);
     }

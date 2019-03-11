@@ -7,15 +7,15 @@ contract Register {
 
     //at the registration, any user gets an address with their ipfs hash. Store this transaction on the blockchain
     function addUserAddress (string memory _ipfsHashAccountdata) public {
-        //Check if the address is not existing in mapping
+        //check if the address is not existing in mapping
         require(bytes(users[msg.sender]).length == 0);
-        //Add ipfs hash value to account
+        //add ipfs hash value to account
         users[msg.sender] = _ipfsHashAccountdata;
     }
 
     //at the registration, any user gets an address with their ipfs hash. Store this transaction on the blockchain
     function editUser(string memory _ipfsHashAccountdata) public {
-        //Add ipfs hash value to account
+        //add ipfs hash value to account
         users[msg.sender] = _ipfsHashAccountdata;
     }
 
